@@ -72,6 +72,7 @@ export default class User extends Component {
               <Text style={styles.row}>{item.title}</Text>
             }
         />
+        <Button title="Motivational GIF" onPress={() => Actions.popup()} />
       </View>
     )
   }
