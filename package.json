@@ -10,6 +10,8 @@
 		"art": "^0.10.1",
 		"axios": "^0.16.2",
 		"d3": "^4.10.0",
+		"@expo/vector-icons": "^5.1.0",
+		"native-base": "^2.3.1",
 		"react": "16.0.0-alpha.12",
 		"react-native": "0.47.1",
 		"react-native-circular-progress": "0.0.8",

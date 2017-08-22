@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Text,
-  View,
-  Button
+  View
 } from 'react-native';
+import { Container, Title, Content, Button, Text } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 
 export default class Main extends Component {
 
   render() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>
-        Make It Happen
-      </Text>
-      <Button title="Log In" onPress={() => Actions.login()}/>
-      <Button title="Register" onPress={() => Actions.register()}/>
-    </View>
+    <Container style={styles.container}>
+      <Title>Make It Happen</Title>
+        <Button block info style={styles.hasmargin} onPress={() => Actions.login()}>
+          <Text>Log In</Text>
+        </Button>
+        <Button block info style={styles.hasmargin} onPress={() => Actions.register()}>
+          <Text>Register</Text>
+        </Button>
+    </Container>
   );
 }
 }
@@ -30,10 +31,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee',
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 30,
     textAlign: 'center',
     margin: 10,
     color: '#000',
   },
+  hasmargin: {
+    marginLeft: 30,
+    marginRight: 30,
+    marginTop: 30
+  }
+
 });
 

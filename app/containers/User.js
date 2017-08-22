@@ -1,8 +1,11 @@
 import React, { PropTypes, Component } from 'react'
-import { View, Text, List, Button, FlatList, StyleSheet } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 import Days from './Days'
 import axios from 'axios'
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+
+import { Icon, Container, Title, Item, Input, Content, Button, Footer, Text, List, Fab } from 'native-base';
+import { Actions } from 'react-native-router-flux';
 
 export default class User extends Component {
   constructor(props){
@@ -14,15 +17,18 @@ export default class User extends Component {
     }
   }
 
-  componentDidMount(){
+  componentWillMount(){
+    console.log(this.props.accessToken)
     // change fetch url to all goals
     axios.get("https://make-it-happen-api.herokuapp.com/api/goals/achieved", {
         access_token: this.props.accessToken
     })
     .then((response) => {
+      console.log(response)
       this.setState({
-        goals: response.data
+        achieved: response.data
       })
+      console.log(this.state.achieved)
     })
     .catch(function (error) {
       console.log(error);
@@ -63,10 +69,11 @@ export default class User extends Component {
   render () {
     return (
       <View>
+
         <AnimatedCircularProgress
-          size={200}
-          width={3}
-          fill={this.state.fill}
+          size={150}
+          width={20}
+          fill={85}
           tintColor="#00e0ff"
           backgroundColor="#3d5875">
           {
@@ -77,7 +84,6 @@ export default class User extends Component {
             )
           }
         </AnimatedCircularProgress>
-
 
         <Button
         title="Edit Profile"
@@ -93,12 +99,45 @@ export default class User extends Component {
 
 
 
+
+      <Container style={styles.container}>
+        <Title>My Progress</Title>
+
+       <Text>User access token: {this.props.accessToken}</Text>
+          {this.state.current ? <Days title={this.state.current.title} day={this.state.day} accessToken={this.props.accessToken}/> : <Button block info style={styles.hasmargin}><Text>Add A Goal</Text></Button>}
+          {this.state.achieved ? <Text style={styles.centeredgoals}> Achieved Goals </Text> : null}
+
+          <List dataArray={this.state.acheived}
+            renderRow={(item) =>
+              <ListItem>
+                <Text>
+                <Icon medium class={item.category_id} ios='ios-trophy' android='md-trophy'/>
+                {item.title}</Text>
+              </ListItem>
+            }>
+          </List>
+
+          <Fab
+            active={this.state.active}
+            position="bottomRight"
+            onPress={() => Actions.popup()}
+            style={styles.actionButton}
+            >
+            <Icon large ios='ios-flame' android="md-flame" />
+          </Fab>
+      </Container>
+
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   centeredgoals: {
     textAlign: 'center',
     fontWeight: 'bold',
@@ -106,9 +145,12 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     marginBottom: 10
   },
-  row: {
-    backgroundColor: '#f4f4f4',
-    fontSize: 15,
-    color: '#696969'
+  hasmargin: {
+    marginLeft: 30,
+    marginRight: 30,
+    marginTop: 30
+  },
+  actionButton: {
+    backgroundColor: "#FFA500"
   }
 })
