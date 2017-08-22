@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import { View, Text, List, Button, FlatList, StyleSheet } from 'react-native'
 import Days from './Days'
 import axios from 'axios'
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 export default class User extends Component {
   constructor(props){
@@ -62,6 +63,22 @@ export default class User extends Component {
   render () {
     return (
       <View>
+        <AnimatedCircularProgress
+          size={200}
+          width={3}
+          fill={this.state.fill}
+          tintColor="#00e0ff"
+          backgroundColor="#3d5875">
+          {
+            (fill) => (
+              <Text style={styles.points}>
+                { this.state.fill }
+              </Text>
+            )
+          }
+        </AnimatedCircularProgress>
+
+
         <Button
         title="Edit Profile"
         />
@@ -73,6 +90,9 @@ export default class User extends Component {
               <Text style={styles.row}>{item.title}</Text>
             }
         />
+
+
+
       </View>
     )
   }
